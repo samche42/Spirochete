@@ -6,7 +6,7 @@ from Bio.SeqUtils import GC
 
 input_directory = sys.argv[1]
 
-main_df = pd.DataFrame(columns=['Bin','Size','Cov','GC','#Contigs','N50','Longest_contig'])
+main_df = pd.DataFrame(columns=['Bin','Size','GC','#Contigs','N50','Longest_contig'])
 
 bins = [file for file in os.listdir(input_directory) if file.endswith(".fasta")]
 
@@ -41,12 +41,11 @@ for file in bins:
 
         #Reset GC and coverages
         GC_total = 0
-        weighted_cov = 0
         #Calculate GC and coverage corrected for contig length
         for record in SeqIO.parse(bin, "fasta"):
                 GC_total += GC(record.seq)
         #Add info to master dataframe
-        main_df = master_df.append({'Bin':bin_name,'Size':size,'Cov':weighted_cov,'GC':GC_total,'#Contigs':num_of_contigs,'N50':n50,'Longest_contig':longest_contig},ignore_index=True)
+        main_df = master_df.append({'Bin':bin_name,'Size':size,'GC':GC_total,'#Contigs':num_of_contigs,'N50':n50,'Longest_contig':longest_contig},ignore_index=True)
 
 #Print it all out to a file
 main_df.to_csv(input_directory+'/bin_summary.txt', sep='\t', index=False)
