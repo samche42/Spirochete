@@ -11,7 +11,7 @@ for OG_group in protein_file_list:
         count= 0
         count = len([1 for line in open(OG_group) if line.startswith(">")])
 #       print(str(os.path.basename(OG_group))+": "+str(count))
-        if count == 26:
+        if count == 20:
                 All.append(str(os.path.basename(OG_group)))
 
 print(All)
