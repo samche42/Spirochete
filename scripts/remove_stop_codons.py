@@ -6,7 +6,7 @@ import sys
 
 input_directory = sys.argv[1]
 
-nucleotide_files = [file for file in os.listdir(input_directory) if file.endswith("multifasta_nuc.fasta")]
+nucleotide_files = [file for file in os.listdir(input_directory) if file.endswith("nuc.fasta")]
 print(nucleotide_files)
 codon_stop_array = ["TAG", "TGA", "TAA"]
 
