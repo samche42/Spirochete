@@ -1,27 +1,49 @@
-import sys
+#!/usr/bin/env python3
+
 import os
-from glob import glob
 from Bio import SeqIO
 
-OG_dir = sys.argv[1] #dir where OG files are
-ext = sys.argv[2] #extesion of files to be found
-genomes = sys.argv[3] #list of all expected - must be exactly as in header of fasta entries
+input_directory = "./"
 
-file_list = [os.path.abspath(fn) for fn in glob(OG_dir+"/*"+ext)]
-print(file_list)
-#creation of list that hold fullpath to each OG file to be parsed
+first_OG_file = [file for file in os.listdir(input_directory) if file.endswith(".aln")][0]
 
-genome_list = set(line.rstrip("\n") for line in open(genomes))
-print(genome_list)
-#create list of all genomes to be found
+headers = []
+with open(first_OG_file, "r") as f:
+    for record in SeqIO.parse(f, "fasta"):
+        headers.append(record.description)
 
+genome_list = [s[:s.rfind("_")] for s in headers]
+
+all_files = [file for file in os.listdir(input_directory) if file.endswith(".aln")]
+nucleotide_files = [entry for entry in all_files if "edited_nuc_without_stop" in entry]
+protein_files = [entry for entry in all_files if "edited_nuc_without_stop" not in entry]
+
+def sort_seqs(input_file,output_file):
+	sequence_dict = SeqIO.to_dict(SeqIO.parse(input_file, "fasta"))
+	sorted_dict = dict(sorted(sequence_dict.items()))
+	with open(output_file, "w") as output_handle:
+		SeqIO.write(sorted_dict.values(), output_handle, "fasta")
+
+#Create genome files
 for genome in genome_list:
-        output_file = OG_dir+"/"+genome+"multifasta"+ext
-        records = []
-        for OG_group in file_list:
-                for r in SeqIO.parse(OG_group, "fasta"):
-                        if genome in str(r.id):
-                                records.append(r)
-#Going through each fasta looking for headers tht contain each genome
-        SeqIO.write(records, output_file, "fasta")
-        #writes pulled fastas to output file
+	nucleotide_output_file = genome+"_multifasta.ffn"
+	protein_output_file = genome+"_multifasta.faa"
+	nucleotide_temp = genome+"_temp.ffn"
+	protein_temp = genome+"_temp.faa"
+	nucleotide_records = []
+	for OG_group in nucleotide_files:
+		for r in SeqIO.parse(OG_group, "fasta"):
+			if genome in str(r.id):
+				nucleotide_records.append(r)
+		SeqIO.write(nucleotide_records, nucleotide_temp, "fasta")
+	protein_records = []
+	for OG_group in protein_files:
+		for r in SeqIO.parse(OG_group, "fasta"):
+			if genome in str(r.id):
+				protein_records.append(r)
+		SeqIO.write(protein_records, protein_temp, "fasta")
+	#Reorder both files alphabetically so that entries are in the same order
+	sort_seqs(nucleotide_temp,nucleotide_output_file)
+	sort_seqs(protein_temp,protein_output_file)
+	os.remove(nucleotide_temp)
+	os.remove(protein_temp)
