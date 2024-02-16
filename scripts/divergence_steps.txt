@@ -1,0 +1,58 @@
+1. Run OMA and extract common OGs using count_OGs.py. Copy shared OGs into new folder. Move into that folder
+
+2. Remove text in square brackets 
+for i in *.fa; do sed 's/\[[^]]*\]//g' $i > ${i/.fa/edited.fa};done
+
+3. Align sequences in each OG file using muscle
+for file in ls *edited.fa; do muscle -align ${file} -output ${file/.fa/.aln};done
+
+4. Concatenate all pertinent ffn files into a single file
+cat *.ffn > All.ffn
+
+5. Get matching nucleotide sequences out for each OG using streamlined_retriever.py
+python3 streamlined_seqretriever.py ./ All.ffn
+
+6. Remove stop codons from nucleotide sequences with remove_stop_codons.py
+python3 remove_stop_codons.py ./
+
+7. Align nucleotide files
+for file in ls *_nuc_without_stop.fasta; do muscle -align ${file} -output ${file/_nuc_without_stop.fasta/_nuc_without_stop.aln};done
+
+*Confirm that the numbers of entries in each file all match the expected number of genomes (20 in this case)
+for file in *.aln;do echo ${file}; grep ">" ${file} |wc -l;done
+
+8. Move OGs into genome files (i.e. making files of OG sequences for each genome) using merge_fastas_for_dNdS.py
+python3 merge_fastas_for_dNdS.py #Only works if placed in current directory
+
+*Confirm that each file has the expected number of OGs (11 in this case)
+for file in *.ffn;do echo ${file}; grep ">" ${file} |wc -l;done
+for file in *.faa;do echo ${file}; grep ">" ${file} |wc -l;done
+
+9. Concatenate genes in each multifasta file
+for file in `ls *multifasta.faa`; do union -filter ${file} > ${file/_multifasta.faa/_merged.faa};done
+for file in `ls *multifasta.ffn`; do union -filter ${file} > ${file/_multifasta.ffn/_merged.ffn};done
+
+10. Concatenate protein and nucleotide files into multifastas
+cat *_merged.faa > Final.faa
+cat *_merged.ffn > Final.ffn
+
+11. Run pal2nal
+pal2nal.pl Final.faa Final.ffn -output paml -codontable 11 > Final.paml
+
+12. Generate a tree for codeml
+raxmlHPC-PTHREADS-SSE3 -s Final.faa -n PAML_bootstrap_tree.nwk -f a -m PROTGAMMAAUTO -N 100 -p 1989 -x 1989 -T 20
+
+13. Run codeml
+codeml All_control_file.ctl
+
+###########################################
+Installing conda envs
+conda create -y --name pal2nal
+conda activate pal2nal
+conda install -y -c bioconda pal2nal
+
+conda create -y --name paml
+conda activate paml
+conda install -y -c bioconda paml
+
+/home/simonsonsc/Temp_analysis/OMA.2.6.0/Output/OrthologousGroupsFasta/Common_OGs
