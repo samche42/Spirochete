@@ -12,7 +12,7 @@ with open(first_OG_file, "r") as f:
     for record in SeqIO.parse(f, "fasta"):
         headers.append(record.description)
 
-genome_list = [s[:s.rfind("_")] for s in headers]
+genome_list = [s[:s.rfind("_")] + "_" for s in headers]
 
 all_files = [file for file in os.listdir(input_directory) if file.endswith(".aln")]
 nucleotide_files = [entry for entry in all_files if "edited_nuc_without_stop" in entry]
