@@ -16,15 +16,13 @@ for file in multifasta_file_list:
         records = []
         wanted = []
         output_file = (os.path.abspath(file))[:-4]+"_nuc.fasta"
-        print(os.path.abspath(output_file))
 #       outputfile named the same as input OG file
         wanted = list(r.id for r in SeqIO.parse(file, "fasta"))
-        print(str(wanted))
+        print("A total of "+str(len(wanted))+" OGs being retrieved. Please confirm this is as expected")
 #       lists all headers in OG file
         for item in wanted:
                 for r in SeqIO.parse(nucleotide_file, "fasta"):
                         if r.id == item:
-                                print(str(r.id))
                                 records.append(r)
 #       pulls all fastas with headers that correspond to wanted list
         SeqIO.write(records, output_file, "fasta")
