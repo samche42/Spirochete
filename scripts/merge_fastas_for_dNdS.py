@@ -26,8 +26,8 @@ def sort_seqs(input_file,output_file):
 
 #Create genome files
 for genome in genome_list:
-	nucleotide_output_file = genome+"_multifasta.ffn"
-	protein_output_file = genome+"_multifasta.faa"
+	nucleotide_output_file = genome+"multifasta.ffn"
+	protein_output_file = genome+"multifasta.faa"
 	nucleotide_temp = genome+"_temp.ffn"
 	protein_temp = genome+"_temp.faa"
 	nucleotide_records = []
