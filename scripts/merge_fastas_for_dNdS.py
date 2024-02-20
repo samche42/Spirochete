@@ -18,6 +18,22 @@ all_files = [file for file in os.listdir(input_directory) if file.endswith(".aln
 nucleotide_files = [entry for entry in all_files if "edited_nuc_without_stop" in entry]
 protein_files = [entry for entry in all_files if "edited_nuc_without_stop" not in entry]
 
+def add_base_filename(filename):
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+    modified_lines = []
+    base_filename = filename.split('.')[0]
+    for line in lines:
+        if line.startswith('>'):
+            modified_lines.append(f'>{base_filename}_{line[1:]}')
+        else:
+            modified_lines.append(line)
+    with open(filename, 'w') as file:
+        file.writelines(modified_lines)
+
+for file in all_files:
+	add_base_filename(file)
+
 def sort_seqs(input_file,output_file):
 	sequence_dict = SeqIO.to_dict(SeqIO.parse(input_file, "fasta"))
 	sorted_dict = dict(sorted(sequence_dict.items()))
