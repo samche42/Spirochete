@@ -54,5 +54,3 @@ conda install -y -c bioconda pal2nal
 conda create -y --name paml
 conda activate paml
 conda install -y -c bioconda paml
-
-/home/simonsonsc/Temp_analysis/OMA.2.6.0/Output/OrthologousGroupsFasta/Common_OGs
