@@ -1,6 +1,5 @@
 library(ggplot2)
 library(reshape2)
-library(RColorBrewer)
 library(vegan)
 library(grid)
 library(ggh4x)
@@ -25,6 +24,5 @@ ggplot() +
   theme(strip.text.x = element_text(angle = 90,size=5),
         panel.spacing=unit(0,"lines"),
         panel.background = element_blank(),
-        axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
+        axis.text.x=element_text(angle = 90),
         axis.ticks.x=element_blank())
