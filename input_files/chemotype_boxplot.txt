@@ -1,0 +1,27 @@
+Sample	Source	Chemotype	OTU6
+TIC2016_050A	Tsitsikamma favus	Chemotype_I	1.479231141
+TIC2016_050AD	Tsitsikamma favus	Chemotype_I	0.137583123
+TIC2016_050AH	Tsitsikamma favus	Chemotype_II	4.376551969
+TIC2016_050AW	Tsitsikamma favus	Chemotype_I	0.62845333
+TIC2016_050B	Tsitsikamma favus	Chemotype_I	3.161161032
+TIC2016_050C	Tsitsikamma favus	Chemotype_II	0.260688217
+TIC2016_050D	Tsitsikamma favus	Chemotype_I	1.426410201
+TIC2018_003A	Tsitsikamma favus	Chemotype_I	5.058784955
+TIC2018_003B	Tsitsikamma favus	Chemotype_I	5.263395273
+TIC2018_003C	Tsitsikamma favus	Chemotype_I	5.222711333
+TIC2018_003D	Tsitsikamma favus	Chemotype_II	12.54173623
+TIC2018_003E	Tsitsikamma favus	Chemotype_I	4.699762321
+TIC2018_003F	Tsitsikamma favus	Chemotype_I	5.015906996
+TIC2018_003G	Tsitsikamma favus	Chemotype_I	1.871303734
+TIC2018_003H	Tsitsikamma favus	Chemotype_II	7.186697564
+TIC2018_003I	Tsitsikamma favus	Chemotype_I	3.077568947
+TIC2018_003J	Tsitsikamma favus	Chemotype_I	1.77067935
+TIC2018_003M	Tsitsikamma favus	Chemotype_II	23.00263389
+TIC2015_201	Tsitsikamma michaeli	Chemotype_II	16.23837234
+TIC2015_202	Tsitsikamma michaeli	Chemotype_II	16.18942731
+TIC2015_204	Tsitsikamma michaeli	Chemotype_II	5.980348147
+TIC2017_026	Tsitsikamma michaeli	Chemotype_I	0.001283153
+TIC2017_028	Tsitsikamma michaeli	Chemotype_I	1.285736396
+TIC2017_030	Tsitsikamma michaeli	Chemotype_I	1.802722003
+TIC2017_034	Tsitsikamma michaeli	Chemotype_I	0.912652615
+TIC2019_013N	Tsitsikamma michaeli	Chemotype_II	4.540618184
